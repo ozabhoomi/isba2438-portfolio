@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { CONTACT_LIMITS } from "./limits";
 
 const dataDir = path.join(process.cwd(), "data");
 const dataFile = path.join(dataDir, "messages.json");
@@ -56,9 +57,9 @@ export function validateContact(input: unknown): ContactValidationResult {
   return {
     ok: true,
     values: {
-      name: nameValue.slice(0, 200),
-      email: emailValue.slice(0, 200),
-      message: messageValue.slice(0, 5000),
+      name: nameValue.slice(0, CONTACT_LIMITS.name),
+      email: emailValue.slice(0, CONTACT_LIMITS.email),
+      message: messageValue.slice(0, CONTACT_LIMITS.message),
     },
   };
 }
