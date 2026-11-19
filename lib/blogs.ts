@@ -1,11 +1,9 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import path from "node:path";
+import { randomUUID } from "node:crypto";
 import { BLOG_LIMITS } from "./limits";
-
-const dataDir = path.join(process.cwd(), "data");
-const dataFile = path.join(dataDir, "blogs.json");
+import { readJsonArray, updateJsonArray } from "./json-store";
 
 export type BlogPost = {
+  id: string;
   slug: string;
   title: string;
   author: string;
@@ -67,25 +65,19 @@ export function validateBlogPost(input: unknown): BlogValidationResult {
   };
 }
 
-export async function readBlogPosts(): Promise<BlogPost[]> {
-  let content: string | undefined;
-  try {
-    content = await readFile(dataFile, "utf8");
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
-      throw error;
-    }
-  }
+export function createBlogPost(values: BlogInput, slug: string): BlogPost {
+  return {
+    id: randomUUID(),
+    slug,
+    title: values.title,
+    author: values.author,
+    content: values.content,
+    createdAt: new Date().toISOString(),
+  };
+}
 
-  if (content === undefined) {
-    return [];
-  }
-
-  const parsed: unknown = JSON.parse(content);
-  if (!Array.isArray(parsed)) {
-    throw new Error("data/blogs.json must contain a JSON array.");
-  }
-  return parsed;
+export function readBlogPosts(): Promise<BlogPost[]> {
+  return readJsonArray<BlogPost>("blogs.json");
 }
 
 export async function blogSlugExists(slug: string): Promise<boolean> {
@@ -94,10 +86,7 @@ export async function blogSlugExists(slug: string): Promise<boolean> {
 }
 
 export async function saveBlogPost(post: BlogPost): Promise<void> {
-  await mkdir(dataDir, { recursive: true });
-  const posts = await readBlogPosts();
-  posts.push(post);
-  await writeFile(dataFile, JSON.stringify(posts, null, 2) + "\n", "utf8");
+  await updateJsonArray<BlogPost>("blogs.json", (posts) => [...posts, post]);
 }
 
 export async function getBlogPostsNewestFirst(): Promise<BlogPost[]> {

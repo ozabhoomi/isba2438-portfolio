@@ -1,16 +1,20 @@
+import { loggedJson } from "@/lib/api-log";
 import {
   blogSlugExists,
+  createBlogPost,
   getBlogPostsNewestFirst,
   saveBlogPost,
   validateBlogPost,
-  type BlogPost,
 } from "@/lib/blogs";
 
 export async function GET() {
   const posts = await getBlogPostsNewestFirst();
-  return Response.json(
+  return loggedJson(
+    "GET",
+    "/api/blogs",
     { posts },
-    { headers: { "Cache-Control": "no-store" } }
+    200,
+    { "Cache-Control": "no-store" }
   );
 }
 
@@ -19,41 +23,41 @@ export async function POST(request: Request) {
   try {
     body = await request.json();
   } catch {
-    return Response.json(
+    return loggedJson(
+      "POST",
+      "/api/blogs",
       { error: "Request body must be valid JSON." },
-      { status: 400 }
+      400
     );
   }
 
   const result = validateBlogPost(body);
 
   if (!result.ok) {
-    return Response.json({ errors: result.errors }, { status: 400 });
+    return loggedJson("POST", "/api/blogs", { errors: result.errors }, 400);
   }
 
   if (await blogSlugExists(result.slug)) {
-    return Response.json(
+    return loggedJson(
+      "POST",
+      "/api/blogs",
       { error: `A post with slug "${result.slug}" already exists.` },
-      { status: 409 }
+      409
     );
   }
 
-  const post: BlogPost = {
-    slug: result.slug,
-    title: result.values.title,
-    author: result.values.author,
-    content: result.values.content,
-    createdAt: new Date().toISOString(),
-  };
+  const post = createBlogPost(result.values, result.slug);
 
   try {
     await saveBlogPost(post);
   } catch {
-    return Response.json(
+    return loggedJson(
+      "POST",
+      "/api/blogs",
       { error: "Something went wrong saving your post." },
-      { status: 500 }
+      500
     );
   }
 
-  return Response.json({ post }, { status: 201 });
+  return loggedJson("POST", "/api/blogs", { post }, 201);
 }

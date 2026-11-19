@@ -1,3 +1,4 @@
+import { loggedJson } from "@/lib/api-log";
 import { saveContactMessage, validateContact } from "@/lib/contact";
 
 export async function POST(request: Request) {
@@ -5,26 +6,30 @@ export async function POST(request: Request) {
   try {
     body = await request.json();
   } catch {
-    return Response.json(
+    return loggedJson(
+      "POST",
+      "/api/contact",
       { error: "Request body must be valid JSON." },
-      { status: 400 }
+      400
     );
   }
 
   const result = validateContact(body);
 
   if (!result.ok) {
-    return Response.json({ errors: result.errors }, { status: 400 });
+    return loggedJson("POST", "/api/contact", { errors: result.errors }, 400);
   }
 
   try {
     await saveContactMessage(result.values);
   } catch {
-    return Response.json(
+    return loggedJson(
+      "POST",
+      "/api/contact",
       { error: "Something went wrong saving your message." },
-      { status: 500 }
+      500
     );
   }
 
-  return Response.json({ ok: true }, { status: 201 });
+  return loggedJson("POST", "/api/contact", { ok: true }, 201);
 }

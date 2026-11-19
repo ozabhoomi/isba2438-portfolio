@@ -1,9 +1,6 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import path from "node:path";
+import { randomUUID } from "node:crypto";
 import { CONTACT_LIMITS } from "./limits";
-
-const dataDir = path.join(process.cwd(), "data");
-const dataFile = path.join(dataDir, "messages.json");
+import { updateJsonArray } from "./json-store";
 
 export type ContactInput = {
   name: string;
@@ -24,7 +21,10 @@ export type ContactValidationResult =
   | { ok: true; values: ContactInput }
   | { ok: false; errors: ContactErrors };
 
-type StoredMessage = ContactInput & { receivedAt: string };
+export type StoredMessage = ContactInput & {
+  id: string;
+  receivedAt: string;
+};
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s.@]+(\.[^\s.@]+)+$/;
 
@@ -65,26 +65,14 @@ export function validateContact(input: unknown): ContactValidationResult {
 }
 
 export async function saveContactMessage(values: ContactInput): Promise<void> {
-  await mkdir(dataDir, { recursive: true });
+  const message: StoredMessage = {
+    id: randomUUID(),
+    ...values,
+    receivedAt: new Date().toISOString(),
+  };
 
-  let content: string | undefined;
-  try {
-    content = await readFile(dataFile, "utf8");
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
-      throw error;
-    }
-  }
-
-  let messages: StoredMessage[] = [];
-  if (content !== undefined) {
-    const parsed: unknown = JSON.parse(content);
-    if (!Array.isArray(parsed)) {
-      throw new Error("data/messages.json must contain a JSON array.");
-    }
-    messages = parsed;
-  }
-
-  messages.push({ ...values, receivedAt: new Date().toISOString() });
-  await writeFile(dataFile, JSON.stringify(messages, null, 2) + "\n", "utf8");
+  await updateJsonArray<StoredMessage>("messages.json", (messages) => [
+    ...messages,
+    message,
+  ]);
 }
