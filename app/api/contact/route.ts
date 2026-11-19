@@ -1,5 +1,20 @@
 import { loggedJson } from "@/lib/api-log";
-import { saveContactMessage, validateContact } from "@/lib/contact";
+import {
+  getContactMessagesNewestFirst,
+  saveContactMessage,
+  validateContact,
+} from "@/lib/contact";
+
+export async function GET() {
+  const messages = await getContactMessagesNewestFirst();
+  return loggedJson(
+    "GET",
+    "/api/contact",
+    { messages },
+    200,
+    { "Cache-Control": "no-store" }
+  );
+}
 
 export async function POST(request: Request) {
   let body: unknown;

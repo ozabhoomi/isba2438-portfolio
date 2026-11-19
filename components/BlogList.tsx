@@ -4,7 +4,24 @@ import { useEffect, useState } from "react";
 import type { BlogPost } from "@/lib/blogs";
 import { errorClass, sectionHeadingClass } from "./FormUI";
 
-export default function BlogList({ refreshKey }: { refreshKey: number }) {
+type BlogListProps = {
+  refreshKey: number;
+  editingId: string | null;
+  onEdit: (post: BlogPost) => void;
+  onDelete: (post: BlogPost) => void;
+};
+
+const listButtonClass =
+  "rounded-full border border-aubergine/25 px-4 py-1.5 text-sm font-medium transition-colors hover:border-aubergine hover:bg-blush";
+const deleteButtonClass =
+  "rounded-full border border-red-600/30 px-4 py-1.5 text-sm font-medium text-red-600 transition-colors hover:border-red-600 hover:bg-red-50";
+
+export default function BlogList({
+  refreshKey,
+  editingId,
+  onEdit,
+  onDelete,
+}: BlogListProps) {
   const [posts, setPosts] = useState<BlogPost[] | null>(null);
   const [listError, setListError] = useState<string | null>(null);
 
@@ -46,7 +63,7 @@ export default function BlogList({ refreshKey }: { refreshKey: number }) {
       {posts && posts.length > 0 && (
         <ul className="mt-4 divide-y divide-aubergine/15">
           {posts.map((post) => (
-            <li key={post.slug} className="py-5 first:pt-0 last:pb-0">
+            <li key={post.id} className="py-5 first:pt-0 last:pb-0">
               <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
                 <h3 className="font-medium">{post.title}</h3>
                 <p className="font-mono text-xs text-aubergine/75">
@@ -56,12 +73,29 @@ export default function BlogList({ refreshKey }: { refreshKey: number }) {
                 <p className="mt-1 font-mono text-xs text-aubergine/75">
                   /blogs/{post.slug}
                   {post.author ? ` · ${post.author}` : ""}
+                  {post.id === editingId ? " · being edited" : ""}
                 </p>
               <p className="mt-2 text-sm leading-6 text-aubergine/85">
                 {post.content.length > 160
                   ? `${post.content.slice(0, 160)}…`
                   : post.content}
               </p>
+              <div className="mt-3 flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => onEdit(post)}
+                  className={listButtonClass}
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onDelete(post)}
+                  className={deleteButtonClass}
+                >
+                  Delete
+                </button>
+              </div>
             </li>
           ))}
         </ul>

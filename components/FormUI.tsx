@@ -16,6 +16,7 @@ type FormFieldProps = {
   maxLength: number;
   rows?: number;
   error?: string;
+  defaultValue?: string;
 };
 
 export default function FormField({
@@ -26,6 +27,7 @@ export default function FormField({
   maxLength,
   rows,
   error,
+  defaultValue,
 }: FormFieldProps) {
   return (
     <div className="flex flex-col gap-1.5">
@@ -39,6 +41,7 @@ export default function FormField({
           placeholder={placeholder}
           rows={rows}
           maxLength={maxLength}
+          defaultValue={defaultValue}
           className={inputClass}
         />
       ) : (
@@ -48,6 +51,7 @@ export default function FormField({
           type={type}
           placeholder={placeholder}
           maxLength={maxLength}
+          defaultValue={defaultValue}
           className={inputClass}
         />
       )}

@@ -1,12 +1,14 @@
 import { randomUUID } from "node:crypto";
 import { CONTACT_LIMITS } from "./limits";
-import { updateJsonArray } from "./json-store";
+import { readJsonArray, updateJsonArray } from "./json-store";
 
 export type ContactInput = {
   name: string;
   email: string;
   message: string;
 };
+
+export type ContactStatus = "new" | "handled";
 
 export type ContactErrors = Partial<Record<keyof ContactInput, string>>;
 
@@ -24,6 +26,7 @@ export type ContactValidationResult =
 export type StoredMessage = ContactInput & {
   id: string;
   receivedAt: string;
+  status: ContactStatus;
 };
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s.@]+(\.[^\s.@]+)+$/;
@@ -69,10 +72,76 @@ export async function saveContactMessage(values: ContactInput): Promise<void> {
     id: randomUUID(),
     ...values,
     receivedAt: new Date().toISOString(),
+    status: "new",
   };
 
   await updateJsonArray<StoredMessage>("messages.json", (messages) => [
     ...messages,
     message,
   ]);
+}
+
+export function readContactMessages(): Promise<StoredMessage[]> {
+  return readJsonArray<StoredMessage>("messages.json");
+}
+
+export async function getContactMessagesNewestFirst(): Promise<
+  StoredMessage[]
+> {
+  const messages = await readContactMessages();
+  return messages
+    .map((message, index) => ({ message, index }))
+    .sort((a, b) => {
+      if (a.message.receivedAt === b.message.receivedAt) {
+        return b.index - a.index;
+      }
+      return a.message.receivedAt < b.message.receivedAt ? 1 : -1;
+    })
+    .map((entry) => entry.message);
+}
+
+export async function getContactMessageById(
+  id: string
+): Promise<StoredMessage | undefined> {
+  const messages = await readContactMessages();
+  return messages.find((message) => message.id === id);
+}
+
+export async function updateContactMessage(
+  id: string,
+  values: ContactInput,
+  status: ContactStatus
+): Promise<StoredMessage | undefined> {
+  let updated: StoredMessage | undefined;
+  await updateJsonArray<StoredMessage>("messages.json", (messages) =>
+    messages.map((message) => {
+      if (message.id !== id) {
+        return message;
+      }
+      updated = {
+        ...message,
+        name: values.name,
+        email: values.email,
+        message: values.message,
+        status,
+      };
+      return updated;
+    })
+  );
+  return updated;
+}
+
+export async function deleteContactMessage(
+  id: string
+): Promise<StoredMessage | undefined> {
+  let deleted: StoredMessage | undefined;
+  await updateJsonArray<StoredMessage>("messages.json", (messages) => {
+    const target = messages.find((message) => message.id === id);
+    if (!target) {
+      return messages;
+    }
+    deleted = target;
+    return messages.filter((message) => message.id !== id);
+  });
+  return deleted;
 }

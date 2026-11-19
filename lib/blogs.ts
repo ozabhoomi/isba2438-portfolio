@@ -89,6 +89,50 @@ export async function saveBlogPost(post: BlogPost): Promise<void> {
   await updateJsonArray<BlogPost>("blogs.json", (posts) => [...posts, post]);
 }
 
+export async function getBlogPostById(
+  id: string
+): Promise<BlogPost | undefined> {
+  const posts = await readBlogPosts();
+  return posts.find((post) => post.id === id);
+}
+
+export async function updateBlogPost(
+  id: string,
+  values: BlogInput
+): Promise<BlogPost | undefined> {
+  let updated: BlogPost | undefined;
+  await updateJsonArray<BlogPost>("blogs.json", (posts) =>
+    posts.map((post) => {
+      if (post.id !== id) {
+        return post;
+      }
+      updated = {
+        ...post,
+        title: values.title,
+        author: values.author,
+        content: values.content,
+      };
+      return updated;
+    })
+  );
+  return updated;
+}
+
+export async function deleteBlogPost(
+  id: string
+): Promise<BlogPost | undefined> {
+  let deleted: BlogPost | undefined;
+  await updateJsonArray<BlogPost>("blogs.json", (posts) => {
+    const target = posts.find((post) => post.id === id);
+    if (!target) {
+      return posts;
+    }
+    deleted = target;
+    return posts.filter((post) => post.id !== id);
+  });
+  return deleted;
+}
+
 export async function getBlogPostsNewestFirst(): Promise<BlogPost[]> {
   const posts = await readBlogPosts();
   return posts
