@@ -10,7 +10,7 @@ type PostPageProps = { params: Promise<{ slug: string }> };
 
 function Loading() {
   return (
-    <p className="text-sm text-zinc-500 dark:text-zinc-400">Loading…</p>
+    <p className="text-sm text-aubergine/75">Loading…</p>
   );
 }
 

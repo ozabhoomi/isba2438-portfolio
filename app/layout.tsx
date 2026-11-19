@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Fraunces, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,38 +27,56 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
-        <header className="sticky top-0 z-10 border-b border-zinc-200 bg-zinc-50/80 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/80">
+      <body className="min-h-full flex flex-col bg-ivory text-aubergine">
+        <header className="sticky top-0 z-10 border-b border-aubergine/15 bg-ivory/80 backdrop-blur">
           <nav className="mx-auto flex w-full max-w-4xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-6 py-4">
-            <Link href="/" className="font-mono text-sm font-semibold">
-              bhoomi.oza
+            <Link
+              href="/"
+              className="font-serif text-xl font-semibold tracking-tight text-aubergine underline decoration-saffron decoration-2 underline-offset-4"
+            >
+              Bhoomi Oza
             </Link>
-            <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
-              <Link href="/" className="hover:underline">
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-medium">
+              <Link href="/" className="transition-colors hover:text-aubergine hover:underline decoration-saffron decoration-2 underline-offset-4">
                 Home
               </Link>
-              <Link href="/about-me" className="hover:underline">
+              <Link
+                href="/about-me"
+                className="transition-colors hover:text-aubergine hover:underline decoration-saffron decoration-2 underline-offset-4"
+              >
                 About Me
               </Link>
-              <Link href="/projects" className="hover:underline">
+              <Link
+                href="/projects"
+                className="transition-colors hover:text-aubergine hover:underline decoration-saffron decoration-2 underline-offset-4"
+              >
                 Projects
               </Link>
-              <Link href="/blogs" className="hover:underline">
+              <Link
+                href="/blogs"
+                className="transition-colors hover:text-aubergine hover:underline decoration-saffron decoration-2 underline-offset-4"
+              >
                 Blog
               </Link>
-              <Link href="/contact-me-server-form" className="hover:underline">
+              <Link
+                href="/contact-me-server-form"
+                className="transition-colors hover:text-aubergine hover:underline decoration-saffron decoration-2 underline-offset-4"
+              >
                 Contact (Server Action)
               </Link>
-              <Link href="/contact-me" className="hover:underline">
+              <Link
+                href="/contact-me"
+                className="transition-colors hover:text-aubergine hover:underline decoration-saffron decoration-2 underline-offset-4"
+              >
                 Contact (API)
               </Link>
             </div>
           </nav>
         </header>
         <main className="flex-1">{children}</main>
-        <footer className="border-t border-zinc-200 py-6 text-center text-sm text-zinc-500 dark:border-zinc-800">
+        <footer className="border-t border-aubergine/10 py-6 text-center text-sm text-aubergine/75">
           Built with Next.js
         </footer>
       </body>

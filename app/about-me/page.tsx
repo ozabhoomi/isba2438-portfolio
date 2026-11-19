@@ -99,14 +99,14 @@ const skillGroups = [
 ];
 
 const sectionHeading =
-  "text-sm font-semibold uppercase tracking-widest text-zinc-500 dark:text-zinc-400";
+  "text-sm font-semibold uppercase tracking-widest text-aubergine/75";
 
 export default function AboutMe() {
   return (
     <div className="mx-auto w-full max-w-4xl px-6">
       <section className="py-16">
         <h1 className="text-4xl font-semibold tracking-tight">About me</h1>
-        <p className="mt-4 max-w-2xl text-lg leading-8 text-zinc-600 dark:text-zinc-400">
+        <p className="mt-4 max-w-2xl text-lg leading-8 text-aubergine/85">
           Business analytics rooted in science — trained in biotechnology,
           sharpened in consulting, and currently building people analytics at
           CooperVision while finishing my M.S. at Santa Clara University.
@@ -115,26 +115,26 @@ export default function AboutMe() {
 
       <section className="py-12">
         <h2 className={sectionHeading}>Education</h2>
-        <div className="mt-6 divide-y divide-zinc-200 dark:divide-zinc-800">
+        <div className="mt-6 divide-y divide-aubergine/15">
           {education.map((item) => (
             <div key={item.school} className="py-6 first:pt-0 last:pb-0">
               <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
                 <h3 className="font-medium">{item.school}</h3>
-                <p className="font-mono text-xs text-zinc-500 dark:text-zinc-400">
+                <p className="font-mono text-xs text-aubergine/75">
                   {item.location}
                 </p>
               </div>
-              <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+              <p className="mt-1 text-sm text-aubergine/85">
                 {item.degree}
                 {item.date && (
-                  <span className="font-mono text-xs text-zinc-500 dark:text-zinc-400">
+                  <span className="font-mono text-xs text-aubergine/75">
                     {"  ·  "}
                     {item.date}
                   </span>
                 )}
               </p>
               {item.details.length > 0 && (
-                <ul className="mt-3 list-disc space-y-1 pl-5 text-sm leading-6 text-zinc-600 marker:text-zinc-400 dark:text-zinc-400">
+                <ul className="mt-3 list-disc space-y-1 pl-5 text-sm leading-6 text-aubergine/85 marker:text-aubergine/70">
                   {item.details.map((detail) => (
                     <li key={detail}>{detail}</li>
                   ))}
@@ -147,22 +147,22 @@ export default function AboutMe() {
 
       <section className="py-12">
         <h2 className={sectionHeading}>Experience</h2>
-        <div className="mt-6 divide-y divide-zinc-200 dark:divide-zinc-800">
+        <div className="mt-6 divide-y divide-aubergine/15">
           {experience.map((job) => (
             <div key={job.company} className="py-6 first:pt-0 last:pb-0">
               <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
                 <h3 className="font-medium">
                   {job.role}
-                  <span className="font-normal text-zinc-500 dark:text-zinc-400">
+                  <span className="font-normal text-aubergine/75">
                     {" "}
                     · {job.company}
                   </span>
                 </h3>
-                <p className="font-mono text-xs text-zinc-500 dark:text-zinc-400">
+                <p className="font-mono text-xs text-aubergine/75">
                   {job.date} · {job.location}
                 </p>
               </div>
-              <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-6 text-zinc-600 marker:text-zinc-400 dark:text-zinc-400">
+              <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-6 text-aubergine/85 marker:text-aubergine/70">
                 {job.bullets.map((bullet) => (
                   <li key={bullet}>{bullet}</li>
                 ))}
@@ -185,7 +185,7 @@ export default function AboutMe() {
                 {group.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="rounded-full border border-zinc-200 px-3 py-1 text-xs font-medium text-zinc-700 dark:border-zinc-800 dark:text-zinc-300"
+                    className="rounded-full border border-aubergine/20 bg-blush px-3 py-1 text-xs font-medium text-aubergine"
                   >
                     {skill}
                   </span>

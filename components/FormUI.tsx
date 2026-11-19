@@ -1,12 +1,12 @@
 const inputClass =
-  "w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm outline-none focus:border-zinc-500 dark:border-zinc-800 dark:bg-zinc-900 dark:focus:border-zinc-400";
+  "w-full rounded-lg border border-aubergine/15 bg-white px-3 py-2 text-sm outline-none focus:border-saffron";
 
-export const errorClass = "text-sm text-red-600 dark:text-red-400";
-export const successClass = "text-sm text-emerald-600 dark:text-emerald-400";
+export const errorClass = "text-sm text-red-600";
+export const successClass = "text-sm text-emerald-600";
 export const submitButtonClass =
-  "w-fit rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300";
+  "w-fit rounded-full bg-aubergine px-6 py-3 text-base font-medium text-ivory transition-colors hover:bg-aubergine-deep disabled:opacity-50";
 export const sectionHeadingClass =
-  "text-sm font-semibold uppercase tracking-widest text-zinc-500 dark:text-zinc-400";
+  "text-sm font-semibold uppercase tracking-widest text-aubergine/75";
 
 type FormFieldProps = {
   id: string;
