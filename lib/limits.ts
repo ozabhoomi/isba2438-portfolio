@@ -27,3 +27,15 @@ export const PROJECT_LIMITS = {
   statLabel: 300,
   sectionCount: 20,
 } as const;
+
+export const QUESTION_CATEGORIES = [
+  "Background",
+  "Work",
+  "Skills",
+  "Personal",
+] as const;
+
+export const QUESTION_LIMITS = {
+  question: 300,
+  answer: 2000,
+} as const;

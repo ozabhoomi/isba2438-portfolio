@@ -21,6 +21,7 @@ type FormFieldProps = {
   defaultValue?: string;
   value?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  options?: readonly string[];
 };
 
 export default function FormField({
@@ -34,6 +35,7 @@ export default function FormField({
   defaultValue,
   value,
   onChange,
+  options,
 }: FormFieldProps) {
   const controlled = value !== undefined;
 
@@ -49,7 +51,20 @@ export default function FormField({
       <label htmlFor={id} className="text-sm font-medium">
         {label}
       </label>
-      {rows ? (
+      {options ? (
+        <select
+          id={id}
+          name={id}
+          className={inputClass}
+          {...commonProps()}
+        >
+          {options.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      ) : rows ? (
         <textarea
           id={id}
           name={id}

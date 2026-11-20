@@ -6,6 +6,11 @@
   --color-aubergine: #40243a;
   --color-aubergine-deep: #2b1626;
   --color-saffron: #c9891e;
+  --color-saffron-deep: #a4730f;
+  --color-teal: #1f6b63;
+  --color-teal-deep: #154e48;
+  --color-rose: #a64d5f;
+  --color-rose-deep: #7e3847;
 }
 
 @theme inline {

@@ -61,6 +61,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                 Blog
               </Link>
               <Link
+                href="/know-me-better"
+                className="transition-colors hover:text-aubergine hover:underline decoration-saffron decoration-2 underline-offset-4"
+              >
+                Know Me Better
+              </Link>
+              <Link
                 href="/contact-me-server-form"
                 className="transition-colors hover:text-aubergine hover:underline decoration-saffron decoration-2 underline-offset-4"
               >
