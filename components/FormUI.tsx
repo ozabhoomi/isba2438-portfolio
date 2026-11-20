@@ -1,3 +1,5 @@
+import type { ChangeEvent } from "react";
+
 const inputClass =
   "w-full rounded-lg border border-aubergine/15 bg-white px-3 py-2 text-sm outline-none focus:border-saffron";
 
@@ -13,10 +15,12 @@ type FormFieldProps = {
   label: string;
   type?: "text" | "email";
   placeholder: string;
-  maxLength: number;
+  maxLength?: number;
   rows?: number;
   error?: string;
   defaultValue?: string;
+  value?: string;
+  onChange?: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 };
 
 export default function FormField({
@@ -28,7 +32,18 @@ export default function FormField({
   rows,
   error,
   defaultValue,
+  value,
+  onChange,
 }: FormFieldProps) {
+  const controlled = value !== undefined;
+
+  function commonProps(): Record<string, unknown> {
+    if (controlled) {
+      return { value, onChange };
+    }
+    return { defaultValue };
+  }
+
   return (
     <div className="flex flex-col gap-1.5">
       <label htmlFor={id} className="text-sm font-medium">
@@ -41,8 +56,8 @@ export default function FormField({
           placeholder={placeholder}
           rows={rows}
           maxLength={maxLength}
-          defaultValue={defaultValue}
           className={inputClass}
+          {...commonProps()}
         />
       ) : (
         <input
@@ -51,8 +66,8 @@ export default function FormField({
           type={type}
           placeholder={placeholder}
           maxLength={maxLength}
-          defaultValue={defaultValue}
           className={inputClass}
+          {...commonProps()}
         />
       )}
       {error && <p className={errorClass}>{error}</p>}
