@@ -10,7 +10,13 @@ import FormField, {
 } from "./FormUI";
 import { submitJson } from "@/lib/submit-json";
 
-export default function ContactFormApi() {
+type ContactFormApiProps = {
+  initialMessage?: string;
+};
+
+export default function ContactFormApi({
+  initialMessage = "",
+}: ContactFormApiProps) {
   const [errors, setErrors] = useState<ContactErrors>({});
   const [sending, setSending] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -75,6 +81,7 @@ export default function ContactFormApi() {
         maxLength={CONTACT_LIMITS.message}
         rows={4}
         error={errors.message}
+        defaultValue={initialMessage}
       />
       <button type="submit" disabled={sending} className={submitButtonClass}>
         {sending ? "Sending..." : "Send message"}

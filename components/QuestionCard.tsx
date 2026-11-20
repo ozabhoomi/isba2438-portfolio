@@ -7,12 +7,21 @@ type QuestionCardProps = {
   question: string;
   answer: string;
   category: string;
+  isAdded: boolean;
+  onAdd: () => void;
 };
+
+const addedButtonClass =
+  "rounded-full bg-aubergine px-4 py-1.5 text-sm font-medium text-ivory";
+const addButtonClass =
+  "rounded-full border border-aubergine/25 px-4 py-1.5 text-sm font-medium transition-colors hover:border-aubergine hover:bg-blush cursor-pointer";
 
 export default function QuestionCard({
   question,
   answer,
   category,
+  isAdded,
+  onAdd,
 }: QuestionCardProps) {
   const [open, setOpen] = useState(false);
   const colors = getCategoryColors(category);
@@ -44,6 +53,17 @@ export default function QuestionCard({
           {answer}
         </p>
       )}
+      <div className="mt-4">
+        {isAdded ? (
+          <span className={addedButtonClass} aria-label="Already in your agenda">
+            Added
+          </span>
+        ) : (
+          <button type="button" onClick={onAdd} className={addButtonClass}>
+            Add to agenda
+          </button>
+        )}
+      </div>
     </div>
   );
 }
