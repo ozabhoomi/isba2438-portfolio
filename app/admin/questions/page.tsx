@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import QuestionsAdmin from "@/components/QuestionsAdmin";
+import PageContainer from "@/components/PageContainer";
 
 export const metadata: Metadata = {
   title: "Admin · Questions | Bhoomi Oza",
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function AdminQuestionsPage() {
   return (
-    <div className="mx-auto w-full max-w-4xl px-6">
+    <PageContainer>
       <section className="py-16">
         <h1 className="text-4xl font-semibold tracking-tight">
           Admin · Questions
@@ -19,6 +20,6 @@ export default function AdminQuestionsPage() {
         </p>
         <QuestionsAdmin />
       </section>
-    </div>
+    </PageContainer>
   );
 }

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import PageContainer from "@/components/PageContainer";
+import SectionHeading from "@/components/SectionHeading";
 
 export const metadata: Metadata = {
   title: "About Me | Bhoomi Oza",
@@ -98,12 +100,9 @@ const skillGroups = [
   },
 ];
 
-const sectionHeading =
-  "text-sm font-semibold uppercase tracking-widest text-aubergine/75";
-
 export default function AboutMe() {
   return (
-    <div className="mx-auto w-full max-w-4xl px-6">
+    <PageContainer>
       <section className="py-16">
         <h1 className="text-4xl font-semibold tracking-tight">About me</h1>
         <p className="mt-4 max-w-2xl text-lg leading-8 text-aubergine/85">
@@ -114,7 +113,7 @@ export default function AboutMe() {
       </section>
 
       <section className="py-12">
-        <h2 className={sectionHeading}>Education</h2>
+        <SectionHeading>Education</SectionHeading>
         <div className="mt-6 divide-y divide-aubergine/15">
           {education.map((item) => (
             <div key={item.school} className="py-6 first:pt-0 last:pb-0">
@@ -146,7 +145,7 @@ export default function AboutMe() {
       </section>
 
       <section className="py-12">
-        <h2 className={sectionHeading}>Experience</h2>
+        <SectionHeading>Experience</SectionHeading>
         <div className="mt-6 divide-y divide-aubergine/15">
           {experience.map((job) => (
             <div key={job.company} className="py-6 first:pt-0 last:pb-0">
@@ -173,7 +172,7 @@ export default function AboutMe() {
       </section>
 
       <section className="py-12 pb-24">
-        <h2 className={sectionHeading}>Skills</h2>
+        <SectionHeading>Skills</SectionHeading>
         <div className="mt-6 flex flex-col gap-6">
           {skillGroups.map((group) => (
             <div
@@ -195,6 +194,6 @@ export default function AboutMe() {
           ))}
         </div>
       </section>
-    </div>
+    </PageContainer>
   );
 }

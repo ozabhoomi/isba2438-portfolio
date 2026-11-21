@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import BlogIndex from "@/components/BlogIndex";
+import PageContainer from "@/components/PageContainer";
+import PostList from "@/components/PostList";
 
 export const metadata: Metadata = {
   title: "Blog | Bhoomi Oza",
@@ -7,14 +8,14 @@ export const metadata: Metadata = {
 
 export default function BlogsPage() {
   return (
-    <div className="mx-auto w-full max-w-4xl px-6">
+    <PageContainer>
       <section className="py-16">
         <h1 className="text-4xl font-semibold tracking-tight">Blog</h1>
         <p className="mt-4 max-w-2xl text-lg leading-8 text-aubergine/85">
           Thoughts and write-ups, served fresh from the posts API.
         </p>
-        <BlogIndex />
+        <PostList variant="public" />
       </section>
-    </div>
+    </PageContainer>
   );
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
+import PageContainer from "@/components/PageContainer";
 
 export const metadata: Metadata = {
   title: "Contact | Bhoomi Oza",
@@ -7,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="mx-auto w-full max-w-4xl px-6">
+    <PageContainer>
       <section className="py-16">
         <h1 className="text-4xl font-semibold tracking-tight">Contact</h1>
         <p className="mt-4 max-w-2xl text-lg leading-8 text-aubergine/85">
@@ -18,6 +19,6 @@ export default function ContactPage() {
           <ContactForm />
         </div>
       </section>
-    </div>
+    </PageContainer>
   );
 }

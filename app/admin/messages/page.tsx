@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import MessagesAdmin from "@/components/MessagesAdmin";
+import PageContainer from "@/components/PageContainer";
 
 export const metadata: Metadata = {
   title: "Admin · Messages | Bhoomi Oza",
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function AdminMessagesPage() {
   return (
-    <div className="mx-auto w-full max-w-4xl px-6">
+    <PageContainer>
       <section className="py-16">
         <h1 className="text-4xl font-semibold tracking-tight">
           Admin · Messages
@@ -19,6 +20,6 @@ export default function AdminMessagesPage() {
         </p>
         <MessagesAdmin />
       </section>
-    </div>
+    </PageContainer>
   );
 }

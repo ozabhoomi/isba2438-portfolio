@@ -9,10 +9,10 @@ import type {
 } from "@/lib/contact";
 import FormField, {
   errorClass,
-  sectionHeadingClass,
   submitButtonClass,
   successClass,
 } from "./FormUI";
+import SectionHeading from "./SectionHeading";
 import { sendJson } from "@/lib/submit-json";
 
 const actionButtonClass =
@@ -285,7 +285,7 @@ export default function MessagesAdmin() {
       )}
 
       <section className="mt-10">
-        <h2 className={sectionHeadingClass}>All messages</h2>
+        <SectionHeading>All messages</SectionHeading>
         {listError && <p className={`mt-4 ${errorClass}`}>{listError}</p>}
         {messages === null && !listError && (
           <p className="mt-4 text-sm text-aubergine/75">Loading…</p>

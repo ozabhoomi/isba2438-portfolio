@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import PageContainer from "@/components/PageContainer";
+import SectionHeading from "@/components/SectionHeading";
+import StatCard from "@/components/StatCard";
 import { Suspense } from "react";
 import { connection } from "next/server";
 import { getProjectBySlug } from "@/lib/projects";
@@ -19,9 +22,6 @@ export async function generateMetadata({
       : "Project Not Found | Bhoomi Oza",
   };
 }
-
-const sectionHeading =
-  "text-sm font-semibold uppercase tracking-widest text-aubergine/75";
 
 function Loading() {
   return <p className="text-sm text-aubergine/75">Loading…</p>;
@@ -59,7 +59,7 @@ async function ProjectContent({ params }: ProjectPageProps) {
 
       {project.sections.map((section) => (
         <section key={section.heading} className="mt-12">
-          <h2 className={sectionHeading}>{section.heading}</h2>
+          <SectionHeading>{section.heading}</SectionHeading>
           {section.body?.map((paragraph) => (
             <p
               key={paragraph}
@@ -76,19 +76,17 @@ async function ProjectContent({ params }: ProjectPageProps) {
             </ul>
           )}
           {section.stat && (
-            <div className="mt-6 inline-flex flex-col rounded-2xl border border-aubergine/10 bg-blush p-8">
-              <p className="font-serif text-5xl font-semibold text-saffron">
-                {section.stat.value}
-              </p>
-              <p className="mt-2 max-w-xs text-sm leading-6 text-aubergine/85">
-                {section.stat.label}
-              </p>
-            </div>
+            <StatCard
+              className="mt-6 inline-flex flex-col"
+              labelClassName="mt-2 max-w-xs text-sm leading-6 text-aubergine/85"
+              value={section.stat.value}
+              label={section.stat.label}
+            />
           )}
         </section>
       ))}
 
-      <h2 className={`mt-12 ${sectionHeading}`}>Skills</h2>
+      <SectionHeading className="mt-12">Skills</SectionHeading>
       <div className="mt-4 flex flex-wrap gap-2">
         {project.skills.map((skill) => (
           <span
@@ -105,10 +103,10 @@ async function ProjectContent({ params }: ProjectPageProps) {
 
 export default function ProjectPage({ params }: ProjectPageProps) {
   return (
-    <div className="mx-auto w-full max-w-4xl px-6">
+    <PageContainer>
       <Suspense fallback={<Loading />}>
         <ProjectContent params={params} />
       </Suspense>
-    </div>
+    </PageContainer>
   );
 }

@@ -83,7 +83,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </header>
         <main className="flex-1">{children}</main>
         <footer className="border-t border-aubergine/10 py-6 text-center text-sm text-aubergine/75">
-          Built with Next.js
+          Built with Next.js ·{" "}
+          <Link
+            href="/admin"
+            className="underline decoration-saffron decoration-2 underline-offset-4 transition-colors hover:text-aubergine"
+          >
+            Admin
+          </Link>
         </footer>
       </body>
     </html>

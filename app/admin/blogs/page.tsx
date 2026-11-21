@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import BlogAdmin from "@/components/BlogAdmin";
+import PageContainer from "@/components/PageContainer";
 
 export const metadata: Metadata = {
   title: "Admin · Blogs | Bhoomi Oza",
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function AdminBlogsPage() {
   return (
-    <div className="mx-auto w-full max-w-4xl px-6">
+    <PageContainer>
       <section className="py-16">
         <h1 className="text-4xl font-semibold tracking-tight">Admin · Blogs</h1>
         <p className="mt-4 max-w-2xl text-lg leading-8 text-aubergine/85">
@@ -17,6 +18,6 @@ export default function AdminBlogsPage() {
         </p>
         <BlogAdmin />
       </section>
-    </div>
+    </PageContainer>
   );
 }

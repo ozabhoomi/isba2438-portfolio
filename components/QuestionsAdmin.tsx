@@ -6,10 +6,10 @@ import { getCategoryColors } from "@/lib/category-styles";
 import type { QuestionErrors, StoredQuestion } from "@/lib/questions";
 import FormField, {
   errorClass,
-  sectionHeadingClass,
   submitButtonClass,
   successClass,
 } from "./FormUI";
+import SectionHeading from "./SectionHeading";
 import { sendJson, submitJson } from "@/lib/submit-json";
 
 const actionButtonClass =
@@ -221,7 +221,7 @@ export default function QuestionsAdmin() {
       </form>
 
       <section className="mt-12">
-        <h2 className={sectionHeadingClass}>Existing questions</h2>
+        <SectionHeading>Existing questions</SectionHeading>
         {listError && <p className={`mt-4 ${errorClass}`}>{listError}</p>}
         {questions === null && !listError && (
           <p className="mt-4 text-sm text-aubergine/75">Loading…</p>

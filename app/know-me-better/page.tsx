@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import KnowMeBetter from "@/components/KnowMeBetter";
+import PageContainer from "@/components/PageContainer";
 
 export const metadata: Metadata = {
   title: "Know Me Better | Bhoomi Oza",
@@ -7,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function KnowMeBetterPage() {
   return (
-    <div className="mx-auto w-full max-w-4xl px-6">
+    <PageContainer>
       <section className="py-16">
         <h1 className="text-4xl font-semibold tracking-tight">
           Know me better
@@ -18,6 +19,6 @@ export default function KnowMeBetterPage() {
         </p>
         <KnowMeBetter />
       </section>
-    </div>
+    </PageContainer>
   );
 }

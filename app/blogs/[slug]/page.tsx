@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import BlogPostView from "@/components/BlogPostView";
+import PageContainer from "@/components/PageContainer";
 
 export const metadata: Metadata = {
   title: "Blog | Bhoomi Oza",
@@ -21,12 +22,12 @@ async function PostContent({ params }: PostPageProps) {
 
 export default function BlogPostPage({ params }: PostPageProps) {
   return (
-    <div className="mx-auto w-full max-w-4xl px-6">
+    <PageContainer>
       <article className="py-16">
         <Suspense fallback={<Loading />}>
           <PostContent params={params} />
         </Suspense>
       </article>
-    </div>
+    </PageContainer>
   );
 }

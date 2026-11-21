@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ProjectsAdmin from "@/components/ProjectsAdmin";
+import PageContainer from "@/components/PageContainer";
 
 export const metadata: Metadata = {
   title: "Admin · Projects | Bhoomi Oza",
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function AdminProjectsPage() {
   return (
-    <div className="mx-auto w-full max-w-4xl px-6">
+    <PageContainer>
       <section className="py-16">
         <h1 className="text-4xl font-semibold tracking-tight">
           Admin · Projects
@@ -18,6 +19,6 @@ export default function AdminProjectsPage() {
         </p>
         <ProjectsAdmin />
       </section>
-    </div>
+    </PageContainer>
   );
 }

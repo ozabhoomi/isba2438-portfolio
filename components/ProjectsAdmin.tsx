@@ -5,10 +5,10 @@ import { PROJECT_LIMITS } from "@/lib/limits";
 import type { Project, ProjectErrors } from "@/lib/projects";
 import FormField, {
   errorClass,
-  sectionHeadingClass,
   submitButtonClass,
   successClass,
 } from "./FormUI";
+import SectionHeading from "./SectionHeading";
 import { sendJson, submitJson } from "@/lib/submit-json";
 
 type SectionDraft = {
@@ -275,7 +275,7 @@ export default function ProjectsAdmin() {
         />
 
         <div className="mt-2">
-          <h3 className={sectionHeadingClass}>Sections</h3>
+          <SectionHeading className="block">Sections</SectionHeading>
           <div className="mt-3 flex flex-col gap-4">
             {sections.map((section, index) => (
               <div key={index} className={sectionBoxClass}>
@@ -397,7 +397,7 @@ export default function ProjectsAdmin() {
       </form>
 
       <section className="mt-12">
-        <h2 className={sectionHeadingClass}>Existing projects</h2>
+        <SectionHeading>Existing projects</SectionHeading>
         {listError && <p className={`mt-4 ${errorClass}`}>{listError}</p>}
         {projects === null && !listError && (
           <p className="mt-4 text-sm text-aubergine/75">Loading…</p>

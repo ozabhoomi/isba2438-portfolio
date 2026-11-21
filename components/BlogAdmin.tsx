@@ -8,11 +8,16 @@ import FormField, {
   submitButtonClass,
   successClass,
 } from "./FormUI";
-import BlogList from "./BlogList";
+import PostList from "./PostList";
+import SectionHeading from "./SectionHeading";
 import { sendJson, submitJson } from "@/lib/submit-json";
 
 const cancelButtonClass =
   "rounded-full border border-aubergine/25 px-5 py-3 text-base font-medium transition-colors hover:border-aubergine hover:bg-blush disabled:opacity-50";
+const actionButtonClass =
+  "rounded-full border border-aubergine/25 px-4 py-1.5 text-sm font-medium transition-colors hover:border-aubergine hover:bg-blush";
+const deleteButtonClass =
+  "rounded-full border border-red-600/30 px-4 py-1.5 text-sm font-medium text-red-600 transition-colors hover:border-red-600 hover:bg-red-50";
 
 export default function BlogAdmin() {
   const [errors, setErrors] = useState<BlogErrors>({});
@@ -187,12 +192,32 @@ export default function BlogAdmin() {
           </p>
         )}
       </form>
-      <BlogList
-        refreshKey={refreshKey}
-        editingId={editing?.id ?? null}
-        onEdit={startEdit}
-        onDelete={handleDelete}
-      />
+      <section className="mt-12">
+        <SectionHeading>Existing posts</SectionHeading>
+        <PostList
+          variant="admin"
+          refreshKey={refreshKey}
+          editingId={editing?.id ?? null}
+          renderActions={(post: BlogPost) => (
+            <div className="mt-3 flex gap-3">
+              <button
+                type="button"
+                onClick={() => startEdit(post)}
+                className={actionButtonClass}
+              >
+                Edit
+              </button>
+              <button
+                type="button"
+                onClick={() => handleDelete(post)}
+                className={deleteButtonClass}
+              >
+                Delete
+              </button>
+            </div>
+          )}
+        />
+      </section>
     </div>
   );
 }

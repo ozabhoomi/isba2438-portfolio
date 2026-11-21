@@ -1,5 +1,7 @@
 import Link from "next/link";
+import PageContainer from "@/components/PageContainer";
 import ProfilePhoto from "@/components/ProfilePhoto";
+import StatCard from "@/components/StatCard";
 
 const highlights = [
   {
@@ -28,7 +30,7 @@ const contactLinks = [
 
 export default function Home() {
   return (
-    <div className="mx-auto w-full max-w-4xl px-6">
+    <PageContainer>
       <section className="py-24 sm:py-32">
         <div className="flex flex-col items-start gap-12 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
           <div>
@@ -82,16 +84,8 @@ export default function Home() {
 
       <section className="grid gap-5 pb-28 sm:grid-cols-3">
         {highlights.map((item) => (
-          <div
-            key={item.stat}
-            className="rounded-2xl border border-aubergine/10 bg-blush p-8"
-          >
-            <p className="font-serif text-5xl font-semibold text-saffron">
-              {item.stat}
-            </p>
-            <p className="mt-3 text-sm leading-6 text-aubergine/85">
-              {item.label}
-            </p>
+          <div key={item.stat}>
+            <StatCard value={item.stat} label={item.label} />
           </div>
         ))}
       </section>
@@ -113,6 +107,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-    </div>
+    </PageContainer>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import ContactFormApi from "@/components/ContactFormApi";
+import PageContainer from "@/components/PageContainer";
 
 export const metadata: Metadata = {
   title: "Contact | Bhoomi Oza",
@@ -27,7 +28,7 @@ export default function ContactApiPage({
   searchParams: Promise<ContactSearchParams>;
 }) {
   return (
-    <div className="mx-auto w-full max-w-4xl px-6">
+    <PageContainer>
       <section className="py-16">
         <h1 className="text-4xl font-semibold tracking-tight">Contact</h1>
         <p className="mt-4 max-w-2xl text-lg leading-8 text-aubergine/85">
@@ -40,6 +41,6 @@ export default function ContactApiPage({
           </Suspense>
         </div>
       </section>
-    </div>
+    </PageContainer>
   );
 }
